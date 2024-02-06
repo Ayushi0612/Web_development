@@ -1,28 +1,25 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import "./page.module.css";
-import Nav from "@/component/Navbar/index";
+import Nav from "@/component/Navbar";
 import { taskDef } from "@/component/types"
-//  let taskData=[
-//  {"title":"thermal","detail":"first project"},
-//  {"title":"Ayu","detail":"!st number"},
-//  {"title":"Dc","detail":"@nd nu"}]
-// interface task{
-//   title:string;
-//   detail:string;
-// }
+import {saveTasksToLocal,getTasksFromLocal} from "@/component"
 
 export default function Home() {
-  // const [tasks, setTasks] = useState(taskData);
-  // const [tasks, setTasks] = useState<task[]>([])
   const [tasks, setTasks] = useState<taskDef[]>([])
 
+  const deleteTask=(i:number)=>{
+    let tasks2= Object.assign([], tasks);
+    tasks2.splice(i,1);
+    setTasks(tasks2);
+    saveTasksToLocal(tasks2);
+  }
   useEffect(()=>{
     if(localStorage.tasks){
-      setTasks(JSON.parse(localStorage.tasks));
+      setTasks(getTasksFromLocal());
+
     }
   },[])
   return (
@@ -37,7 +34,7 @@ export default function Home() {
              </div>
              <div className="todo-bar-right-section">
                 <Link href="/EditTask"><img src="./icons/pencil.svg"  /></Link>
-               <img src="./icons/trash2.svg"  />
+               <img src="./icons/trash2.svg" onClick={()=>deleteTask(i)} />
                <img src="./icons/checkCircle.svg"   />
              </div>
            </div>))}

@@ -4,11 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { taskDef } from "@/component/types";
 interface props{
-    name?: boolean;
+    submitBtnLabel: string;
 }
 
 
-export default function Form({name}:props) {
+export default function Form({submitBtnLabel}:props) {
   const [detail, setDetail] = useState("");
   const [title, setTitle] = useState("");
 
@@ -50,7 +50,7 @@ export default function Form({name}:props) {
             />
           </div>
           <div id="add-btn-container" className="button-container">
-            {name===true? <button className="btn">ADD</button> : <button className="btn">UPDATE</button>}
+           <button className="btn">{submitBtnLabel}</button>
             <Link href="/" className="btn">
               CANCEL
             </Link>

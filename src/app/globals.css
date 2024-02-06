@@ -328,7 +328,7 @@
   font-family: sans-serif;
   font-style: normal;
   line-height: normal;
-  font-size: 18;
+  font-size: 15px;
   margin-right: 18px;
   margin-left: 10px;
   text-decoration: none;
@@ -351,3 +351,34 @@
   box-shadow: 0 6px 10px 0 #9C9DAF;
 }
 
+.AppBar{
+  display: flex;
+  padding: 10px 10px;
+  height: 25px;
+  justify-content: space-around;
+  background-color:  white;
+}
+
+.AppBar p{
+  margin: 2px 0px;
+}
+
+.left-AppBar-section{
+  color: #9395D3;
+  font-size: 12px;
+}
+.left-AppBar-section img{
+  height: 12px;
+  color: #9395D3;
+}
+
+.right-AppBar-section{
+  color: #9C9DAF;
+  padding-left: 20px;
+  font-size: 12px;
+}
+.right-AppBar-section img{
+  color: #9C9DAF;
+  padding-left: 20px;
+  height: 12px;
+}
