@@ -48,6 +48,17 @@ export default function Home() {
           <Link href="/AddTask" className="button"><img src="/icons/plus.svg" alt="add" /></Link>
         </div>
       </div>
+
+      <div className="AppBar" id="footer">
+            <div className="left-AppBar-section">
+                <img src="./icons/playlist.svg" alt="playlist"/>
+                <p>All</p>
+            </div>
+            <div className="right-AppBar-section">
+                <img className="add" src="./icons/tick.svg" alt="tick"/>
+                <p>Completed</p>
+            </div>
+        </div>  
     </main>
   );
 }
