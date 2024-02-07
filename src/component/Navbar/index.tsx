@@ -3,7 +3,7 @@ import "@/component/Navbar/style.css";
 interface props {
   title: string;
   backbtn?: boolean;
-  rightIcon?: "calender" | "battry";
+  rightIcon?: "calender" | "battery";
 }
 
 function Nav({ title, backbtn, rightIcon }: props) {

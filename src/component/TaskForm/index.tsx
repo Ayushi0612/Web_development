@@ -3,6 +3,8 @@ import { useState } from "react";
 import React from "react";
 import Link from "next/link";
 import { taskDef } from "@/component/types";
+import { getTasksFromLocal, saveTasksToLocal } from "@/component";
+
 interface props{
     submitBtnLabel: string;
 }
@@ -17,11 +19,11 @@ export default function Form({submitBtnLabel}:props) {
     event.preventDefault();
     let tasks = [];
     if (localStorage.tasks) {
-      tasks = JSON.parse(localStorage.tasks);
+      tasks = getTasksFromLocal();
       //  console.log(tasks)
     }
     tasks.push(task);
-    localStorage.tasks = JSON.stringify(tasks);
+    saveTasksToLocal(tasks);
     console.log(task);
   };
 
