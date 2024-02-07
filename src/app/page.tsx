@@ -43,7 +43,7 @@ export default function Home() {
                <div className="sub-title">{task.detail}</div>
              </div>
              <div className="todo-bar-right-section">
-                <Link href="/EditTask"><img src="./icons/pencil.svg"  /></Link>
+                <Link href={`/EditTask/${i}`}><img src="./icons/pencil.svg"  /></Link>
                <img src="./icons/trash2.svg" onClick={()=>deleteTask(i)} />
                <img src="./icons/checkCircle.svg"  onClick={() => scheduledTask(i)}
                   className={task.scheduled ? "scheduled" : ""} />

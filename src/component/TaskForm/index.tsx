@@ -2,29 +2,25 @@
 import { useState } from "react";
 import React from "react";
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
 import { taskDef } from "@/component/types";
-import { getTasksFromLocal, saveTasksToLocal } from "@/component";
 
 interface props{
     submitBtnLabel: string;
+    onSave: (task:taskDef)=>void;
 }
 
 
-export default function Form({submitBtnLabel}:props) {
+export default function Form({submitBtnLabel, onSave}:props) {
   const [detail, setDetail] = useState("");
   const [title, setTitle] = useState("");
+  const router = useRouter();
 
   const save = (event: React.SyntheticEvent) => {
     let task:taskDef = { detail, title };
     event.preventDefault();
-    let tasks = [];
-    if (localStorage.tasks) {
-      tasks = getTasksFromLocal();
-      //  console.log(tasks)
-    }
-    tasks.push(task);
-    saveTasksToLocal(tasks);
-    console.log(task);
+    onSave(task);
+    router.push('/')
   };
 
   return (
