@@ -11,11 +11,21 @@ export default function Home() {
   const [tasks, setTasks] = useState<taskDef[]>([])
 
   const deleteTask=(i:number)=>{
+    if (tasks[i].scheduled) return alert("You cannot delete this task");
     let tasks2= Object.assign([], tasks);
     tasks2.splice(i,1);
     setTasks(tasks2);
     saveTasksToLocal(tasks2);
   }
+
+  const scheduledTask = (i: number) => {
+    let tasks2: taskDef[] = Object.assign([], tasks);
+    tasks2[i].scheduled = !tasks2[i].scheduled;
+    setTasks(tasks2);
+    saveTasksToLocal(tasks2);
+  };
+
+
   useEffect(()=>{
     if(localStorage.tasks){
       setTasks(getTasksFromLocal());
@@ -35,7 +45,8 @@ export default function Home() {
              <div className="todo-bar-right-section">
                 <Link href="/EditTask"><img src="./icons/pencil.svg"  /></Link>
                <img src="./icons/trash2.svg" onClick={()=>deleteTask(i)} />
-               <img src="./icons/checkCircle.svg"   />
+               <img src="./icons/checkCircle.svg"  onClick={() => scheduledTask(i)}
+                  className={task.scheduled ? "scheduled" : ""} />
              </div>
            </div>))}
            </div>
