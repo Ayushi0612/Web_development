@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
@@ -7,11 +7,12 @@ import { taskDef } from "@/component/types";
 
 interface props{
     submitBtnLabel: string;
+    task?:taskDef;
     onSave: (task:taskDef)=>void;
 }
 
 
-export default function Form({submitBtnLabel, onSave}:props) {
+export default function Form({submitBtnLabel, onSave,task}:props) {
   const [detail, setDetail] = useState("");
   const [title, setTitle] = useState("");
   const router = useRouter();
@@ -22,6 +23,13 @@ export default function Form({submitBtnLabel, onSave}:props) {
     onSave(task);
     router.push('/')
   };
+
+  useEffect(()=>{
+      if(task){
+        setTitle(task.title);
+        setDetail(task.detail);
+      }
+  },[task])
 
   return (
     <main>
@@ -35,6 +43,7 @@ export default function Form({submitBtnLabel, onSave}:props) {
               className="input"
               required
               onChange={(event) => setTitle(event.currentTarget.value)}
+              value={title}
             />
           </div>
           <div className="add-main-container-text-detail">Detail</div>
@@ -45,6 +54,7 @@ export default function Form({submitBtnLabel, onSave}:props) {
               className="input"
               required
               onChange={(event) => setDetail(event.currentTarget.value)}
+              value={detail}
             />
           </div>
           <div id="add-btn-container" className="button-container">
