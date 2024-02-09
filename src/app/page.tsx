@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(()=>{
     if(localStorage.tasks){
       setTasks(getTasksFromLocal());
-
+      // console.log(localStorage.tasks)
     }
   },[])
   return (
