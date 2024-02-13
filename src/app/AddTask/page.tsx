@@ -4,6 +4,7 @@ import Nav from "@/component/Navbar";
 import Form from "@/component/TaskForm";
 import { taskDef } from "@/component/types";
 import {getTasksFromLocal,saveTasksToLocal} from "@/component";
+import Spinner from "@/component/Spinner";
 
 
 export default function AddTask() {
@@ -21,6 +22,7 @@ export default function AddTask() {
     <main>
       <Nav title="Add Task" backbtn={true} />
       <Form submitBtnLabel="ADD" onSave={save}/>
+      <Spinner/>
     </main>
   );
 }
