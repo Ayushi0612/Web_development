@@ -1,6 +1,6 @@
 "use client";
 import React from "react"
-import "@/app/Spinner/spin.css"
+import "@/component/Spinner/style.css"
 
 export default function Spinner(){
     return(
