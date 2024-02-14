@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import Link from "next/link";
-import { useRouter } from 'next/navigation'
 import { taskDef } from "@/components/types";
 
 interface props{
@@ -11,17 +10,14 @@ interface props{
     onSave: (task:taskDef)=>void;
 }
 
-
 export default function Form({submitBtnLabel, onSave,task}:props) {
   const [detail, setDetail] = useState("");
   const [title, setTitle] = useState("");
-  const router = useRouter();
-
+ 
   const save = (event: React.SyntheticEvent) => {
     let task:taskDef = { detail, title };
     event.preventDefault();
     onSave(task);
-    router.push('/')
   };
 
   useEffect(()=>{
