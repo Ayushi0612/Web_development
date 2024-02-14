@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
-import { taskDef } from "@/component/types";
+import { taskDef } from "@/components/types";
 
 interface props{
     submitBtnLabel: string;

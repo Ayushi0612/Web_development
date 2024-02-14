@@ -1,41 +1,49 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "@/components/api";
 import Link from "next/link";
 import "./page.module.css";
-import Nav from "@/component/Navbar";
-import { taskDef } from "@/component/types";
-import { saveTasksToLocal, getTasksFromLocal } from "@/component";
-import Spinner from "@/component/Spinner";
+import Nav from "@/components/Navbar";
+import { taskDef } from "@/components/types";
+import Spinner from "@/components/Spinner";
 
 export default function Home() {
   const [tasks, setTasks] = useState<taskDef[]>([]);
   const [loading, setLoading] = useState(false);
-  const deleteTask = (i: string) => {
-    // if (tasks[i].scheduled) return alert("You cannot delete this task");
-    // let tasks2 = Object.assign([], tasks);
-    // tasks2.splice(i, 1);
-    // setTasks(tasks2);
-    // saveTasksToLocal(tasks2);
-    
+
+  const deleteTask = async (task: taskDef) => {
+    setLoading(true);
+    if(task.scheduled){
+      alert(`This task ${task.title} cannot be deleted`);
+      return
+    }
+    try {
+      await axios.delete(`/tasks/${task._id}`);
+      const res = await axios.get("/tasks");
+      setTasks(res.data);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error deleting task:", error);
+    }
   };
 
-  const scheduledTask = (i: string) => {
-    // let tasks2: taskDef[] = Object.assign([], tasks);
-    // tasks2[i].scheduled = !tasks2[i].scheduled;
-    // setTasks(tasks2);
-    // saveTasksToLocal(tasks2);
+  const scheduledTask = async (task: taskDef) => {
+    setLoading(true);
+    let task2 = Object.assign({}, task);
+    task2.scheduled = !task2.scheduled;
+    delete task2._id;
+    await axios.put(`/tasks/${task._id}`,task2);
+    let res = await axios.get(`/tasks`);
+    setTasks(res.data);
+    setLoading(false);
   };
 
   useEffect(() => {
     (async () => {
-      setLoading(true)
-      const res = await axios.get(
-        "https://crudcrud.com/api/f139f1b6df09441887793beeb85fb775/task"
-      );
+      setLoading(true);
+      const res = await axios.get("/tasks");
       setTasks(res.data);
-      setLoading(false)
+      setLoading(false);
       // console.log(res.data)
     })();
   }, []);
@@ -43,29 +51,34 @@ export default function Home() {
   return (
     <main>
       <Nav title="TODO List" rightIcon="calender" />
-      {loading && <Spinner/>}
-      {!loading && <div className="todo-center-container">
-        <div className="todo-list-container" id="todo-list"></div>
-        {tasks.map((task) => (
-          <div className="todo-bar" key={task.title}>
-            <div className="todo-bar-left-section">
-              <div className="title">{task.title}</div>
-              <div className="sub-title">{task.detail}</div>
+      {loading && <Spinner />}
+      {!loading && (
+        <div className="todo-center-container">
+          <div className="todo-list-container" id="todo-list"></div>
+          {tasks.map((task) => (
+            <div className="todo-bar" key={task.title}>
+              <div className="todo-bar-left-section">
+                <div className="title">{task.title}</div>
+                <div className="sub-title">{task.detail}</div>
+              </div>
+              <div className="todo-bar-right-section">
+                <Link href={`/EditTask/${task._id}`}>
+                  <img src="./icons/pencil.svg" />
+                </Link>
+                <img
+                  src="./icons/trash2.svg"
+                  onClick={() => deleteTask(task)}
+                />
+                <img
+                  src="./icons/checkCircle.svg"
+                  onClick={() => scheduledTask(task)}
+                  className={task.scheduled ? "scheduled" : ""}
+                />
+              </div>
             </div>
-            <div className="todo-bar-right-section">
-              <Link href={`/EditTask/${task._id}`}>
-                <img src="./icons/pencil.svg" />
-              </Link>
-              <img src="./icons/trash2.svg" onClick={() => deleteTask(task._id)} />
-              <img
-                src="./icons/checkCircle.svg"
-                onClick={() => scheduledTask(task._id)}
-                className={task.scheduled ? "scheduled" : ""}
-              />
-            </div>
-          </div>
-        ))}
-      </div>}
+          ))}
+        </div>
+      )}
       <div>
         <div className="add-todo-button">
           {/* <Link href="/AddTask" className="button">+</Link> */}

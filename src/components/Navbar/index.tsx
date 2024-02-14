@@ -1,5 +1,5 @@
 import React from "react";
-import "@/component/Navbar/style.css";
+import "./style.css";
 interface props {
   title: string;
   backbtn?: boolean;

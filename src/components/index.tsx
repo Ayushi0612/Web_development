@@ -1,4 +1,4 @@
-import { taskDef } from "@/component/types"
+import { taskDef } from "@/components/types"
 
 export let saveTasksToLocal=(tasks:taskDef[])=>{
     localStorage.tasks = JSON.stringify(tasks);
