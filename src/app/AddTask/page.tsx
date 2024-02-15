@@ -20,8 +20,7 @@ export default function AddTask() {
   return (
     <main>
       <Nav title="Add Task" backbtn={true} />
-      <Form submitBtnLabel="ADD" onSave={save}/>
-      {loading && <Spinner/>}
+      {loading ? (<Spinner/>):(<Form submitBtnLabel="ADD" onSave={save}/>)}
     </main>
   );
 }

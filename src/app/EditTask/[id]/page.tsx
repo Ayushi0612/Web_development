@@ -39,7 +39,6 @@ export default function EditTask() {
     <main>
       <Nav title="Edit Task" backbtn={true} />
       {!loading && <Form submitBtnLabel="UPDATE" onSave={save} task={task} />}
-      {loading && <Spinner/>}
     </main>
   );
 }
